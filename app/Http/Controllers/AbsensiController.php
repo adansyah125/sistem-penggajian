@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+use App\Exports\ExportAbsen;
 use App\Models\Absensi;
 use App\Models\Karyawan;
-use App\Exports\ExportAbsen;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -18,7 +18,8 @@ class AbsensiController extends Controller
 
         $grouped = $records->groupBy(function ($item) {
             $weekStart = Carbon::parse($item->tanggal)->startOfWeek(Carbon::MONDAY)->format('Y-m-d');
-            return $weekStart . '-' . $item->id_karyawan;
+
+            return $weekStart.'-'.$item->id_karyawan;
         });
 
         $dayMap = [
@@ -31,15 +32,19 @@ class AbsensiController extends Controller
             $weekStart = Carbon::parse($first->tanggal)->startOfWeek(Carbon::MONDAY);
 
             $days = ['senin' => 'alpa', 'selasa' => 'alpa', 'rabu' => 'alpa', 'kamis' => 'alpa', 'jumat' => 'alpa', 'sabtu' => 'alpa'];
+            $jam = ['senin' => 0, 'selasa' => 0, 'rabu' => 0, 'kamis' => 0, 'jumat' => 0, 'sabtu' => 0];
+            $totalJam = 0;
 
             foreach ($group as $record) {
                 $dayName = strtolower(Carbon::parse($record->tanggal)->locale('en')->dayName);
                 if (isset($dayMap[$dayName])) {
                     $days[$dayMap[$dayName]] = $record->status;
+                    $jam[$dayMap[$dayName]] = (int) $record->jam_lembur;
+                    $totalJam += (int) $record->jam_lembur;
                 }
             }
 
-            return (object)[
+            return (object) [
                 'id_karyawan' => $first->id_karyawan,
                 'karyawan' => $first->karyawan,
                 'minggu_mulai' => $weekStart,
@@ -49,6 +54,13 @@ class AbsensiController extends Controller
                 'kamis' => $days['kamis'],
                 'jumat' => $days['jumat'],
                 'sabtu' => $days['sabtu'],
+                'jam_senin' => $jam['senin'],
+                'jam_selasa' => $jam['selasa'],
+                'jam_rabu' => $jam['rabu'],
+                'jam_kamis' => $jam['kamis'],
+                'jam_jumat' => $jam['jumat'],
+                'jam_sabtu' => $jam['sabtu'],
+                'total_jam' => $totalJam,
             ];
         })->sortByDesc('minggu_mulai')->values();
 
@@ -108,8 +120,8 @@ class AbsensiController extends Controller
             'status.jumat' => 'required|array',
             'status.sabtu' => 'required|array',
             'status.*.*' => 'required|in:hadir,izin,sakit,alpa',
-            'keterangan' => 'nullable|array',
-            'keterangan.*' => 'nullable|string|max:255',
+            'lembur' => 'nullable|array',
+            'lembur.*.*' => 'nullable|numeric|min:0',
         ]);
 
         $offset = ['senin' => 0, 'selasa' => 1, 'rabu' => 2, 'kamis' => 3, 'jumat' => 4, 'sabtu' => 5];
@@ -124,22 +136,23 @@ class AbsensiController extends Controller
             $tanggal = $mingguMulai->copy()->addDays($o)->format('Y-m-d');
 
             foreach ($request->status[$hari] as $idKaryawan => $status) {
-                $keterangan = $request->keterangan[$idKaryawan] ?? null;
-
+                $jam = $request->lembur[$hari][$idKaryawan] ?? 0;
                 Absensi::updateOrCreate(
                     ['id_karyawan' => $idKaryawan, 'tanggal' => $tanggal],
-                    ['status' => $status, 'keterangan' => $keterangan]
+                    ['status' => $status, 'jam_lembur' => $jam]
                 );
             }
         }
 
         Alert::toast('Berhasil Menginput Absensi', 'success');
+
         return redirect()->route('absensi.index');
     }
 
     public function edit($id)
     {
         $data = Absensi::with('karyawan')->findOrFail($id);
+
         return view('page.absensi.edit', compact('data'));
     }
 
@@ -147,15 +160,16 @@ class AbsensiController extends Controller
     {
         $request->validate([
             'status' => 'required|in:hadir,izin,sakit,alpa',
-            'keterangan' => 'nullable|string|max:255',
+            'jam_lembur' => 'nullable|numeric|min:0',
         ]);
 
         Absensi::findOrFail($id)->update([
             'status' => $request->status,
-            'keterangan' => $request->keterangan,
+            'jam_lembur' => $request->jam_lembur ?? 0,
         ]);
 
         Alert::toast('Berhasil Mengupdate Absensi', 'success');
+
         return redirect()->route('absensi.index');
     }
 
@@ -169,6 +183,7 @@ class AbsensiController extends Controller
             ->delete();
 
         Alert::toast('Berhasil Menghapus Data Absensi', 'success');
+
         return redirect()->route('absensi.index');
     }
 
@@ -180,6 +195,7 @@ class AbsensiController extends Controller
     public function export()
     {
         $absen = Absensi::with('karyawan')->orderBy('tanggal', 'desc')->get();
+
         return view('page.absensi.export', compact('absen'));
     }
 
@@ -187,6 +203,7 @@ class AbsensiController extends Controller
     {
         Absensi::findOrFail($id)->delete();
         Alert::toast('Berhasil Menghapus Data Absensi', 'success');
+
         return redirect()->route('absensi.index');
     }
 }

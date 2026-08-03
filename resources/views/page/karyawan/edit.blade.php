@@ -3,7 +3,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Menambah Data Karyawan</h1>
+                <h1>Edit Data Karyawan</h1>
             </div>
 
             <div class="section-body">
@@ -35,38 +35,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Jabatan</label>
-                                        <select id="" name="jabatan" class="form-control">
+                                        <select name="id_jabatan" class="form-control">
                                             <option value="">-- Pilih Jabatan --</option>
-                                            <option value="administrasi"{{ $karyawan->jabatan === 'administrasi' ? 'selected' : '' }}>
-                                                Administrasi
-                                            </option>
-                                            <option value="gudang"{{ $karyawan->jabatan === 'gudang' ? 'selected' : '' }}>
-                                                Gudang
-                                            </option>
-                                            <option value="produksi"{{ $karyawan->jabatan === 'produksi' ? 'selected' : '' }}>
-                                                Produksi
-                                            </option>
-                                            <option value="keuangan"{{ $karyawan->jabatan === 'keuangan' ? 'selected' : '' }}>
-                                                Keuangan
-                                            </option>
-                                            <option value="marketing"{{ $karyawan->jabatan === 'marketing' ? 'selected' : '' }}>
-                                                Marketing
-                                            </option>
-                                            <option value="hrd"{{ $karyawan->jabatan === 'hrd' ? 'selected' : '' }}>
-                                                HRD
-                                            </option>
-                                            <option value="it"{{ $karyawan->jabatan === 'it' ? 'selected' : '' }}>
-                                                IT
-                                            </option>
-                                            <option value="quality_control"{{ $karyawan->jabatan === 'quality_control' ? 'selected' : '' }}>
-                                                Quality Control
-                                            </option>
-                                            <option value="operator"{{ $karyawan->jabatan === 'operator' ? 'selected' : '' }}>
-                                                Operator
-                                            </option>
-                                            <option value="supervisor"{{ $karyawan->jabatan === 'supervisor' ? 'selected' : '' }}>
-                                                Supervisor
-                                            </option>
+                                            @foreach ($jabatan as $j)
+                                                <option value="{{ $j->id }}"
+                                                    {{ $karyawan->id_jabatan == $j->id ? 'selected' : '' }}>
+                                                    {{ $j->nama }} (Rp. {{ number_format($j->gaji_pokok) }})
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan</button>

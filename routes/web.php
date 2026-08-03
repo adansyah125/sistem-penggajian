@@ -1,13 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\GajiController;
 use App\Http\Controllers\AbsensiController;
-use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GajiController;
+use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfleController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,13 @@ Route::middleware(['auth.check'])->group(function () {
     Route::post('/karyawan/{id}/update', [KaryawanController::class, 'update'])->name('karyawan.update');
     Route::get('/karyawan/{id}/delete', [KaryawanController::class, 'destroy'])->name('karyawan.delete');
 
+    Route::get('/jabatan', [JabatanController::class, 'index'])->name('jabatan.index');
+    Route::get('/jabatan/create', [JabatanController::class, 'create'])->name('jabatan.create');
+    Route::post('/jabatan/store', [JabatanController::class, 'store'])->name('jabatan.store');
+    Route::get('/jabatan/{id}/edit', [JabatanController::class, 'edit'])->name('jabatan.edit');
+    Route::post('/jabatan/{id}/update', [JabatanController::class, 'update'])->name('jabatan.update');
+    Route::get('/jabatan/{id}/delete', [JabatanController::class, 'destroy'])->name('jabatan.delete');
+
     Route::get('/gaji', [GajiController::class, 'index'])->name('gaji.index');
     Route::get('/gaji/{id}/edit', [GajiController::class, 'edit'])->name('gaji.edit');
     Route::post('/gaji/{id}/update', [GajiController::class, 'update'])->name('gaji.update');
@@ -53,6 +61,7 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/gaji/{id}/delete', [GajiController::class, 'destroy'])->name('gaji.delete');
     Route::get('/gaji/cetak/{id}', [GajiController::class, 'cetak'])->name('gaji.cetak');
     Route::get('/gaji/cetak_all', [GajiController::class, 'cetak_all'])->name('gaji.cetak_all');
+    Route::get('/gaji/jam-lembur', [GajiController::class, 'getJamLembur'])->name('gaji.jamlembur');
     Route::get('/gaji/{id}/delete', [GajiController::class, 'destroy'])->name('gaji.delete');
 
     Route::get('/absensi', [AbsensiController::class, 'index'])->name('absensi.index');

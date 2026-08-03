@@ -29,6 +29,7 @@
                                             <th>Jumat</th>
                                             <th>Sabtu</th>
                                             <th>Minggu</th>
+                                            <th>Jam Lembur</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -66,6 +67,13 @@
                                                     <span class="badge {{ $b }}">{{ ucfirst($data->sabtu) }}</span>
                                                 </td>
                                                 <td><span class="badge badge-secondary">Libur</span></td>
+                                                <td>
+                                                    @if ($data->total_jam > 0)
+                                                        <span class="badge badge-info">{{ $data->total_jam }} jam</span>
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
                                                 <td class="d-flex" style="gap:5px">
                                                     <a href="{{ route('absensi.create', ['tanggal' => $data->minggu_mulai->format('Y-m-d')]) }}"
                                                         class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>

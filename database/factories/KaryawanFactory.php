@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Jabatan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,7 @@ class KaryawanFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'alamat' => $this->faker->address,
             'telepon' => $this->faker->phoneNumber,
-            'jabatan' => $this->faker->randomElement(['administrasi', 'gudang', 'produksi', 'keuangan', 'marketing', 'hrd', 'it', 'quality_control', 'operator', 'supervisor']),
+            'id_jabatan' => Jabatan::inRandomOrder()->value('id') ?? 1,
         ];
     }
 }

@@ -29,8 +29,9 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Keterangan</label>
-                                    <textarea name="keterangan" class="form-control" rows="3" placeholder="Opsional">{{ $data->keterangan }}</textarea>
+                                    <label>Jam Lembur</label>
+                                    <input type="number" name="jam_lembur" class="form-control" min="0"
+                                        value="{{ $data->jam_lembur }}">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                                 <a href="{{ route('absensi.index') }}" class="btn btn-danger">Kembali</a>

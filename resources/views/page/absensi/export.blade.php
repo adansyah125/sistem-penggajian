@@ -6,7 +6,7 @@
             <th>Tanggal</th>
             <th>Nama Karyawan</th>
             <th>Status</th>
-            <th>Keterangan</th>
+            <th>Jam Lembur</th>
         </tr>
     </thead>
     <tbody>
@@ -16,7 +16,7 @@
                 <td>{{ \Carbon\Carbon::parse($data->tanggal)->translatedFormat('d F Y') }}</td>
                 <td>{{ $data->karyawan->nama }}</td>
                 <td>{{ ucfirst($data->status) }}</td>
-                <td>{{ $data->keterangan ?? '-' }}</td>
+                <td>{{ $data->jam_lembur }}</td>
             </tr>
         @endforeach
     </tbody>

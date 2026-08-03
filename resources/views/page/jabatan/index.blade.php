@@ -3,14 +3,14 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Karyawan</h1>
+                <h1>Jabatan</h1>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div>
-                            <a href="{{ route('karyawan.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>
-                                Karyawan</a>
+                            <a href="{{ route('jabatan.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>
+                                Jabatan</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -18,34 +18,31 @@
                                     <thead class="text-center">
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Email</th>
-                                            <th>Alamat</th>
-                                            <th>Telepon</th>
-                                            <th>Jabatan</th>
+                                            <th>Nama Jabatan</th>
+                                            <th>Gaji Pokok</th>
+                                            <th>Pajak (%)</th>
+                                            <th>BPJS (%)</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
-                                        @foreach ($karyawan as $data)
+                                        @foreach ($jabatan as $data)
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>{{ $data->nama }}</td>
-                                                <td>{{ $data->email }}</td>
-                                                <td>{{ $data->alamat }}</td>
-                                                <td>{{ $data->telepon }}</td>
+                                                <td>Rp. {{ number_format($data->gaji_pokok) }}</td>
+                                                <td>{{ $data->persen_pajak }}%</td>
+                                                <td>{{ $data->persen_bpjs }}%</td>
                                                 <td>
-                                                    <div class="badge badge-success">{{ $data->jabatan->nama ?? '-' }}</div>
-                                                </td>
-                                                <td class="d-flex" style="gap: 5px">
-                                                    <a href="{{ route('karyawan.edit', $data->id) }}"
+                                                    <a href="{{ route('jabatan.edit', $data->id) }}"
                                                         class="btn btn-warning"><i class="fas fa-cog"></i></a>
-                                                    <a href="{{ route('karyawan.delete', $data->id) }}"
-                                                        class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                    <a href="{{ route('jabatan.delete', $data->id) }}"
+                                                        class="btn btn-danger"
+                                                        onclick="return confirm('Yakin ingin menghapus jabatan ini?')"><i
+                                                            class="fas fa-trash"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
-
                                     </tbody>
                                 </table>
                             </div>

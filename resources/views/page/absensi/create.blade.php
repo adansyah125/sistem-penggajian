@@ -42,18 +42,17 @@
                                                         {{ \Carbon\Carbon::parse($days[$key])->translatedFormat('l d F') }}</th>
                                                 @endforeach
                                                 <th>Minggu (Libur)</th>
-                                                <th>Keterangan</th>
                                             </tr>
                                         </thead>
                                         <tbody class="text-center">
                                             @foreach ($karyawan as $k)
-                                                @php $ket = $existing['senin'][$k->id]->keterangan ?? ''; @endphp
                                                 <tr>
                                                     <th>{{ $loop->index + 1 }}</th>
                                                     <th class="text-left">{{ $k->nama }}</th>
                                                     @foreach ($offset as $key => $o)
                                                         @php
-                                                            $st = isset($existing[$key][$k->id]) ? $existing[$key][$k->id]->status : 'hadir';
+                                                            $st = isset($existing[$key][$k->id]) ? $existing[$key][$k->id]->status : 'alpa';
+                                                            $jm = isset($existing[$key][$k->id]) ? $existing[$key][$k->id]->jam_lembur : 0;
                                                         @endphp
                                                         <td>
                                                             <select name="status[{{ $key }}][{{ $k->id }}]"
@@ -63,15 +62,12 @@
                                                                         {{ ucfirst($s) }}</option>
                                                                 @endforeach
                                                             </select>
+                                                            <input type="number" name="lembur[{{ $key }}][{{ $k->id }}]"
+                                                                class="form-control mt-2" min="0" value="{{ $jm }}"
+                                                                placeholder="Jam lembur">
                                                         </td>
                                                     @endforeach
                                                     <td><span class="badge badge-secondary">Libur</span></td>
-                                                    <td>
-                                                        <input type="text" name="keterangan[{{ $k->id }}]"
-                                                            class="form-control"
-                                                            value="{{ old('keterangan.' . $k->id, $ket) }}"
-                                                            placeholder="Opsional">
-                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

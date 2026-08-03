@@ -22,25 +22,41 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Karyawan</th>
+                                            <th>Jabatan</th>
                                             <th>Gaji Pokok</th>
-                                            <th>Potongan</th>
+                                            <th>Potongan Pajak</th>
+                                            <th>Potongan BPJS</th>
                                             <th>Lembur</th>
                                             <th>Total Gaji (Rp)</th>
-                                            <th>Jadwal Penggajian</th>
+                                            <th>Jadwal Pembayaran</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
                                         @foreach ($gaji as $data)
+                                            @php
+                                                $potonganPajak = $data->gaji_pokok * $data->persen_pajak / 100;
+                                                $potonganBpjs = $data->gaji_pokok * $data->persen_bpjs / 100;
+                                            @endphp
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>{{ $data->karyawan->nama }}</td>
+                                                <td>{{ $data->karyawan->jabatan->nama ?? '-' }}</td>
                                                 <td>Rp. {{ number_format($data->gaji_pokok) }}</td>
                                                 <td>
-                                                    @if (is_null($data->potongan))
-                                                        -
+                                                    @if ($data->persen_pajak > 0)
+                                                        Rp. {{ number_format($potonganPajak) }}
+                                                        ({{ $data->persen_pajak }}%)
                                                     @else
-                                                        Rp. {{ number_format($data->potongan) }}
+                                                        -
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($data->persen_bpjs > 0)
+                                                        Rp. {{ number_format($potonganBpjs) }}
+                                                        ({{ $data->persen_bpjs }}%)
+                                                    @else
+                                                        -
                                                     @endif
                                                 </td>
                                                 <td>Rp. {{ number_format($data->lembur) }}</td>

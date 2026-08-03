@@ -37,7 +37,7 @@
                                             <th>No</th>
                                             <th>Nama Karyawan</th>
                                             <th>Total Gaji (Rp)</th>
-                                            <th>Jadwal Penggajian</th>
+                                            <th>Jadwal Pembayaran</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">

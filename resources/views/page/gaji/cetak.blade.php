@@ -44,75 +44,96 @@
         <div class="struk">
             <table>
                 <tr align="center">
-                    <td colspan="3"><b>Slip Gaji</b></td>
+                    <td colspan="2"><b>Slip Gaji</b></td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="padding-bottom:5px;">
+                    <td colspan="2" style="padding-bottom:5px;">
                         <b>PT Cahaya Bulan</b><br>
                         Jl. Bunga No.10, Laweyan, Surakarta
                     </td>
                 </tr>
                 
                 <tr>
-                    <td colspan="3">
+                    <td colspan="2">
                         <hr>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">Nama : {{ $gaji->karyawan->nama }}</td>
+                    <td colspan="1">Nama : {{ $gaji->karyawan->nama }}</td>
                     <td align="right">Alamat :
                         Jebres, Surakarta
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">Jabatan : {{ $gaji->karyawan->jabatan }}</td>
+                    <td colspan="1">Jabatan : {{ $gaji->karyawan->jabatan->nama ?? '-' }}</td>
                     
-                    <td align="right">Telepon : {{ $gaji->karyawan->telepon }} </td>
+                    <td align="right">Telepon : 0857-8021-8381 </td>
 
                 </tr>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="2">
                         <hr>
                     </td>
                 </tr>
                 <tr>
-                    <td><b>No</b></td>
                     <td><b>Keterangan</b></td>
                     <td align="right"><b>Jumlah</b></td>
                 </tr>
+                @php
+                    $potonganPajak = $gaji->gaji_pokok * $gaji->persen_pajak / 100;
+                    $potonganBpjs = $gaji->gaji_pokok * $gaji->persen_bpjs / 100;
+                    $totalPotongan = $potonganPajak + $potonganBpjs;
+                @endphp
                 <tr>
-                    <td>1</td>
                     <td><b>Gaji Pokok</b></td>
                     <td align="right">Rp. {{ number_format($gaji->gaji_pokok, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
-                    <td>2</td>
-                    <td><b>Potongan</b></td>
-                    <td align="right">Rp. {{ number_format($gaji->potongan, 2, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><b>Lembur</b></td>
+                    <td><b>Lembur</b> ({{ $gaji->total_jam_lembur }} jam x Rp. {{ number_format($gaji->tarif_lembur) }})</td>
                     <td align="right">Rp. {{ number_format($gaji->lembur, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
-                    <td colspan="3">
+                    <td><b>Total Penghasilan</b> </td>
+                    <td align="right"><b>Rp. {{ number_format($gaji->gaji_pokok + $gaji->lembur, 2, ',', '.') }}</b></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
                         <hr>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2"><b>Terbilang :</b>
-                        {{ \App\Support\Terbilang::convert($gaji->total_gaji) }}</td>
-                    <td align="right"><b>Total Diterima : Rp.
+                    <td colspan="2" align="left"><b>Potongan</b></td>
+                </tr>
+                <tr>
+                    <td><b>Pajak</b> ({{ $gaji->persen_pajak }}%)</td>
+                    <td align="right">Rp. {{ number_format($potonganPajak, 2, ',', '.') }}</td>
+                </tr>
+                <tr>
+                    <td><b>BPJS</b> ({{ $gaji->persen_bpjs }}%)</td>
+                    <td align="right">Rp. {{ number_format($potonganBpjs, 2, ',', '.') }}</td>
+                </tr>
+                <tr>
+                    <td><b>Total Potongan</b></td>
+                    <td align="right">Rp. {{ number_format($totalPotongan, 2, ',', '.') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    {{-- <td ><b>Terbilang :</b>
+                        {{ \App\Support\Terbilang::convert($gaji->total_gaji) }}</td> --}}
+                    <td colspan="2" align="right"><b>Total Diterima : Rp.
                             {{ number_format($gaji->total_gaji, 2, ',', '.') }}</b></td>
                 </tr>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="2">
                         <hr>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="2">
                         <table width="100%">
                             <tr>
                                 <td style="border:none">&nbsp;</td>

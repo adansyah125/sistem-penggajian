@@ -14,16 +14,21 @@ class Karyawan extends Model
         'email',
         'alamat',
         'telepon',
-        'jabatan',
+        'id_jabatan',
     ];
+
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class, 'id_jabatan');
+    }
 
     public function gaji()
     {
-        return $this->hasMany(Karyawan::class, 'id_karyawan');
+        return $this->hasMany(Penggajian::class, 'id_karyawan');
     }
 
     public function absensi()
     {
-        return $this->hasMany(Karyawan::class, 'id_karyawan');
+        return $this->hasMany(Absensi::class, 'id_karyawan');
     }
 }

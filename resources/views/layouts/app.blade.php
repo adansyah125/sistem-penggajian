@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Aplikasi Penggajian</title>
+    <title>Aplikasi Penggajian | PT Cahaya Bulan</title>
     <link rel="icon" type="image/png" href="{{ asset('assets/img/avatar/avatar-5.png') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 

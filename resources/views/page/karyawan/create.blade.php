@@ -31,18 +31,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Jabatan</label>
-                                        <select id="" name="jabatan" class="form-control">
+                                        <select name="id_jabatan" class="form-control">
                                             <option value="">-- Pilih Jabatan --</option>
-                                            <option value="administrasi">Administrasi</option>
-                                            <option value="gudang">Gudang</option>
-                                            <option value="produksi">Produksi</option>
-                                            <option value="keuangan">Keuangan</option>
-                                            <option value="marketing">Marketing</option>
-                                            <option value="hrd">HRD</option>
-                                            <option value="it">IT</option>
-                                            <option value="quality_control">Quality Control</option>
-                                            <option value="operator">Operator</option>
-                                            <option value="supervisor">Supervisor</option>
+                                            @foreach ($jabatan as $j)
+                                                <option value="{{ $j->id }}" {{ old('id_jabatan') == $j->id ? 'selected' : '' }}>
+                                                    {{ $j->nama }} (Rp. {{ number_format($j->gaji_pokok) }})
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan</button>

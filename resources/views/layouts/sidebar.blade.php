@@ -22,6 +22,10 @@
                 <a href="{{ route('karyawan.index') }}" class="nav-link "><i class="far fa-user"></i>
                     <span>Karyawan</span></a>
             </li>
+            <li class="dropdown {{ Route::currentRouteName() == 'jabatan.index' ? 'active' : '' }}">
+                <a href="{{ route('jabatan.index') }}" class="nav-link"><i class="fas fa-briefcase"></i>
+                    <span>Jabatan</span></a>
+            </li>
             <li class="dropdown {{ Route::currentRouteName() == 'absensi.index' ? 'active' : '' }}">
                 <a href="{{ route('absensi.index') }}" class="nav-link"><i class="fas fa-book"></i>
                     <span>Absensi</span></a>
