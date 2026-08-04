@@ -114,7 +114,7 @@
                 </tr>
                 <tr>
                     <td><b>Total Potongan</b></td>
-                    <td align="right">Rp. {{ number_format($totalPotongan, 2, ',', '.') }}</td>
+                    <td align="right"><b>Rp. {{ number_format($totalPotongan, 2, ',', '.') }}</b></td>
                 </tr>
                 <tr>
                     <td colspan="2">

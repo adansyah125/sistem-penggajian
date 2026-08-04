@@ -40,7 +40,7 @@
                                             @foreach ($jabatan as $j)
                                                 <option value="{{ $j->id }}"
                                                     {{ $karyawan->id_jabatan == $j->id ? 'selected' : '' }}>
-                                                    {{ $j->nama }} (Rp. {{ number_format($j->gaji_pokok) }})
+                                                    {{ $j->nama }}
                                                 </option>
                                             @endforeach
                                         </select>
