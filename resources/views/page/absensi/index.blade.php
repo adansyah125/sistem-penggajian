@@ -11,7 +11,7 @@
                         <div>
                             <a href="{{ route('absensi.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>
                                 Input Absensi</a>
-                            <a href="absensi-export" class="btn btn-success"><i class="fas fa-download"></i>
+                            <a href="#" id="btnExportExcel" class="btn btn-success"><i class="fas fa-download"></i>
                                 Excel</a>
                         </div>
                         <div class="card-body">
@@ -92,4 +92,34 @@
             </div>
         </section>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $('#btnExportExcel').on('click', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Export Excel Absensi',
+                html: '<p class="mb-2">Pilih bulan yang ingin di-export</p>' +
+                    '<input type="month" id="bulanExport" class="swal2-input" style="width: 80%;">',
+                showCancelButton: true,
+                confirmButtonText: 'Export',
+                cancelButtonText: 'Batal',
+                focusConfirm: false,
+                preConfirm: () => {
+                    const bulan = document.getElementById('bulanExport').value;
+                    if (!bulan) {
+                        Swal.showValidationMessage('Silakan pilih bulan terlebih dahulu');
+                        return false;
+                    }
+                    return bulan;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{ route('absensi.export_excel') }}?bulan=" + result.value;
+                }
+            });
+        });
+    </script>
 @endsection

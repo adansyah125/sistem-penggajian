@@ -61,7 +61,7 @@
                                                 </td>
                                                 <td>Rp. {{ number_format($data->lembur) }}</td>
                                                 <td>Rp. {{ number_format($data->total_gaji) }}</td>
-                                                <td>{{ $data->created_at->translatedformat('d F Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($data->tgl_gaji)->translatedformat('d F Y') }}</td>
                                                 <td class="d-flex" style="gap: 5px">
                                                     <a href="{{ route('gaji.edit', $data->id) }}" class="btn btn-warning"><i
                                                             class="fas fa-cog"></i></a>

@@ -187,16 +187,26 @@ class AbsensiController extends Controller
         return redirect()->route('absensi.index');
     }
 
-    public function export_excel()
+    public function export_excel(Request $request)
     {
-        return Excel::download(new ExportAbsen, 'absensi.xlsx');
+        $request->validate([
+            'bulan' => 'required|date_format:Y-m',
+        ]);
+
+        $bulan = Carbon::parse($request->bulan . '-01');
+
+        return Excel::download(
+            new ExportAbsen($request->bulan),
+            'absensi-' . $bulan->locale('id')->translatedFormat('F Y') . '.xlsx'
+        );
     }
 
     public function export()
     {
         $absen = Absensi::with('karyawan')->orderBy('tanggal', 'desc')->get();
+        $bulan = Carbon::now();
 
-        return view('page.absensi.export', compact('absen'));
+        return view('page.absensi.export', compact('absen', 'bulan'));
     }
 
     public function destroy($id)

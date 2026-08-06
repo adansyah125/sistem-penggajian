@@ -77,7 +77,7 @@
                                             <div class="form-group">
                                                 <label>Tarif Lembur / Jam (Rp)</label>
                                                 <input type="number" name="tarif_lembur" id="tarif_lembur"
-                                                    class="form-control" value="15000" min="0" required>
+                                                    class="form-control" value="50000" min="0" required>
                                             </div>
                                         </div>
                                     </div>

@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Total Absensi</h4>
+                                <h4>Total Absensi Bulan Ini</h4>
                             </div>
                             <div class="card-body">
                                 {{ $absensi }}

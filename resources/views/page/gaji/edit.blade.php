@@ -81,7 +81,7 @@
                                             <div class="form-group">
                                                 <label>Tarif Lembur / Jam (Rp)</label>
                                                 <input type="number" name="tarif_lembur" id="tarif_lembur"
-                                                    class="form-control" value="{{ $data->tarif_lembur }}" min="0"
+                                                    class="form-control" value="50000" min="0"
                                                     required>
                                             </div>
                                         </div>

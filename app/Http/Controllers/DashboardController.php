@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $profile = User::all();
         $karyawan = Karyawan::count();
-        $absensi = Absensi::count();
+        $absensi = Absensi::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->count();
         $gaji = Penggajian::with('karyawan')->get();
         $totalGajiPokok = $gaji->sum('gaji_pokok');
         $totalPotongan = $gaji->sum('potongan');

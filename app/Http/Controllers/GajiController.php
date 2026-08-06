@@ -14,7 +14,7 @@ class GajiController extends Controller
 {
     public function index()
     {
-        $gaji = Penggajian::with('karyawan:id,nama,id_jabatan', 'karyawan.jabatan')->get();
+        $gaji = Penggajian::with('karyawan:id,nama,id_jabatan', 'karyawan.jabatan')->latest()->get();
 
         return view('page.gaji.index', compact('gaji'));
     }

@@ -1,4 +1,5 @@
 <h1>Data Absensi Karyawan</h1>
+<h3>Bulan: {{ $bulan->locale('id')->translatedFormat('F Y') }}</h3>
 <table>
     <thead>
         <tr>
@@ -10,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($absen as $index => $data)
+        @forelse ($absen as $index => $data)
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ \Carbon\Carbon::parse($data->tanggal)->translatedFormat('d F Y') }}</td>
@@ -18,6 +19,10 @@
                 <td>{{ ucfirst($data->status) }}</td>
                 <td>{{ $data->jam_lembur }}</td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="5" style="text-align: center;">Tidak ada data untuk bulan ini</td>
+            </tr>
+        @endforelse
     </tbody>
 </table>
